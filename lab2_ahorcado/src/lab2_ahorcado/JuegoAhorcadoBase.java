@@ -4,7 +4,10 @@
  */
 package lab2_ahorcado;
 
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,7 +20,7 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
     protected int intentos;
     protected int limiteIntentos;
     protected ArrayList<Character> letrasUsadas = new ArrayList<>();
-    protected ArrayList<String> figuraAhorcado = new ArrayList<>();
+    protected ArrayList<ImageIcon> figuraAhorcado = new ArrayList<>();
     
     
     public JuegoAhorcadoBase(int limiteIntentos){ //Cada juego por lo minmo ha de empezar con una idea de la palabra secreta y el limite de intentos
@@ -52,7 +55,7 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
         return letrasUsadas;
     }
 
-    public ArrayList<String> getFiguraAhorcado() {
+    public ArrayList<ImageIcon> getFiguraAhorcado() {
         return figuraAhorcado;
     }
     
@@ -115,7 +118,7 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
         }
     }
     
-    public String estadoFigura() {
+    public ImageIcon estadoFigura() {
         int errores = limiteIntentos - intentos;
 
         if (errores < 0) {
@@ -128,4 +131,21 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
         return figuraAhorcado.get(errores);
     }
     
+    protected void cargarFiguras() {
+        figuraAhorcado = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            try {
+                URL url = getClass().getResource("imagenes/parte" + (i + 1) + ".PNG");
+                
+                if (url != null) {
+                    figuraAhorcado.add(new ImageIcon(url));
+                } else {
+                    //si no encuentra imagen, mete alguna babosada vacia
+                    figuraAhorcado.add(new ImageIcon(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB)));
+                }
+            } catch (Exception e) {
+                figuraAhorcado.add(new ImageIcon(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB)));
+            }
+        }
+    }
 }

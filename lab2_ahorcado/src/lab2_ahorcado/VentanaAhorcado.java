@@ -95,6 +95,8 @@ public class VentanaAhorcado extends JFrame {
         
         CargarImagenes();
         
+        centro.add(PanelImagen);
+        
         TxtAscii = new JTextArea(8, 20);
         TxtAscii.setEnabled(false);
         TxtAscii.setFont(new Font("Monospaced", Font.PLAIN, 12));
@@ -105,6 +107,7 @@ public class VentanaAhorcado extends JFrame {
         JPanel PanelMid = new JPanel();
         PanelMid.setLayout(new GridLayout(1, 2, 10, 10));
         PanelMid.add(ScrollAscii);
+        PanelMid.add(centro);
         
         PanelCentro.add(PanelArriba, BorderLayout.NORTH);
         PanelCentro.add(PanelMid, BorderLayout.CENTER);
