@@ -55,8 +55,33 @@ public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
     }
 
     @Override
-    public void jugar() {
+    public void jugar(char letra) {
         //futura logica aqui
+        if (intentos <= 0 || hasGanado()) {
+            return;
+        }
+        
+        letra = Character.toUpperCase(letra);
+        
+        if (!Character.isLetter(letra)) {
+            return;
+        }
+        
+        for (int i = 0; i < letrasUsadas.size(); i++) {
+            if (letrasUsadas.get(i) == letra) {
+                return;
+            }
+        }
+        
+        letrasUsadas.add(letra);
+        
+        boolean acierto = verificarLetra(letra);
+        
+        if (acierto) {
+            actualizarPalabraActual(letra);
+        } else {
+            intentos = Math.max(0, intentos - 1);
+        }
     }
     
     

@@ -10,5 +10,5 @@ package lab2_ahorcado;
  */
 public interface JuegoAhorcado {
     public void inicializarPalabraSecreta();
-    public void jugar();
+    public void jugar(char letra);
 }

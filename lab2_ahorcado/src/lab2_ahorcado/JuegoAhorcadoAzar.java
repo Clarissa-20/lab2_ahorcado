@@ -58,7 +58,7 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
     }
 
     @Override
-    public void jugar() {
+    public void jugar(char letra) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

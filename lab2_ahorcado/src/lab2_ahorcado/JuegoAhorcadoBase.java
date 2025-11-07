@@ -23,6 +23,10 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
     public JuegoAhorcadoBase(int limiteIntentos){ //Cada juego por lo minmo ha de empezar con una idea de la palabra secreta y el limite de intentos
         this.palabraSecreta=palabraSecreta;
         this.limiteIntentos=limiteIntentos;
+        
+        this.letrasUsadas = new ArrayList<>();
+        this.figuraAhorcado = new ArrayList<>();
+        
         palabraActual="";
     }
 
@@ -38,6 +42,12 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
         return intentos;
     }
 
+    public int getLimiteIntentos() {
+        return limiteIntentos;
+    }
+    
+    
+
     public ArrayList<Character> getLetrasUsadas() {
         return letrasUsadas;
     }
@@ -46,7 +56,27 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
         return figuraAhorcado;
     }
     
+    protected void reiniciarEstado() {
+        this.intentos = limiteIntentos;
+        this.letrasUsadas.clear();
+        
+        construirPalabraActual();
+    }
     
+    protected void construirPalabraActual() {
+        if (palabraSecreta == null) {
+            palabraSecreta = "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for (int i = 0; i < palabraSecreta.length(); i++) {
+            char a = Character.toUpperCase(palabraSecreta.charAt(i));
+            sb.append(a == ' ' ? ' ' : '_');
+        }
+        
+        this.palabraActual = sb.toString();
+    }
     
     public abstract void actualizarPalabraActual(char letra);
     

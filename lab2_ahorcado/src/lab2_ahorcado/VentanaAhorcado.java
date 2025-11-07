@@ -13,13 +13,21 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.net.URL;
 
 public class VentanaAhorcado extends JFrame {
     
     private JuegoAhorcadoBase JuegoActual;
     
+    private JTextField TxtPalabraFija;
+    private JButton BtnIniciarFijo;
+    
     private JLabel LblPalabra;
     private JLabel LblIntentos;
+    
+    private JPanel PanelImagen;
+    private JLabel LblBase;
+    private ArrayList<JLabel> Capas;
     
     private JTextArea TxtAscii;
     private JLabel LblMensaje;
@@ -27,7 +35,6 @@ public class VentanaAhorcado extends JFrame {
     private JPanel PanelLetras;
     private ArrayList<JButton> BtnLetras;
     
-    private JButton BtnIniciar;
     
     public VentanaAhorcado() {
         super("Juego Ahorcado");
@@ -40,11 +47,16 @@ public class VentanaAhorcado extends JFrame {
         JPanel PanelTop = new JPanel();
         PanelTop.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         
-        BtnIniciar = new JButton("Iniciar");
+        TxtPalabraFija = new JTextField(14);
+        TxtPalabraFija.setToolTipText("Ej: PROGRAMACION");
+        
+        BtnIniciarFijo = new JButton("Iniciar (Fijo)");
+        
         
         ConfigurarEventos();
         
-        PanelTop.add(BtnIniciar);
+        PanelTop.add(TxtPalabraFija);
+        PanelTop.add(BtnIniciarFijo);
         
         
         JPanel PanelCentro = new JPanel();
@@ -56,16 +68,37 @@ public class VentanaAhorcado extends JFrame {
         LblIntentos = new JLabel("Intentos: 6", SwingConstants.CENTER);
         LblIntentos.setFont(new Font("SansSerif", Font.PLAIN, 16));
         
+        JPanel centro = new JPanel(new BorderLayout(10, 10));
         
         JPanel PanelArriba = new JPanel();
         PanelArriba.setLayout(new GridLayout(2, 1));
         PanelArriba.add(LblPalabra);
         PanelArriba.add(LblIntentos);
         
+        PanelImagen = new JPanel(null);
+        PanelImagen.setPreferredSize(new Dimension(360, 240));
+        PanelImagen.setBackground(Color.WHITE);
+        
+        LblBase = new JLabel();
+        LblBase.setBounds(0, 0, 360, 240);
+        PanelImagen.add(LblBase);
+        
+        Capas = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            JLabel capa = new JLabel();
+            capa.setBounds(0, 0, 360, 240);
+            capa.setVisible(false);
+            Capas.add(capa);
+            
+            PanelImagen.add(capa);
+        }
+        
+        CargarImagenes();
         
         TxtAscii = new JTextArea(8, 20);
         TxtAscii.setEnabled(false);
         TxtAscii.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        
         
         JScrollPane ScrollAscii = new JScrollPane(TxtAscii);
         
@@ -105,17 +138,30 @@ public class VentanaAhorcado extends JFrame {
     }
     
     private void ConfigurarEventos() {
-        BtnIniciar.addActionListener(e -> {
-            if (JuegoActual == null) {
-                LblMensaje.setText("No hay juego configurado");
-                return;
+        BtnIniciarFijo.addActionListener(e -> {
+            String fija = TxtPalabraFija.getText().trim();
+            
+            if (fija.isEmpty()) {
+                fija = "PROGRAMACION";
             }
             
+            JuegoActual = new JuegoAhorcadoFijo(fija);
             JuegoActual.inicializarPalabraSecreta();
+            ActualizarStick();
+            
+            LblPalabra.setText(Espaciada(JuegoActual.getPalabraActual()));
+            LblIntentos.setText("Intentos: " + JuegoActual.getIntentos());
+            TxtAscii.setText(JuegoActual.figuraAhorcado.toString());
+            LblMensaje.setText("Ingresa un numero");
+            
             ActualizarPantallaInicio();
-        });
+            
+            for (JButton boton : BtnLetras) {
+               boton.setEnabled(true);
+            }       
+        }); 
     }
-    
+     
     private void ActualizarPantallaInicio() {
         LblPalabra.setText(Espaciada(JuegoActual.getPalabraActual()));
         LblIntentos.setText("Intentos: " + JuegoActual.getIntentos());
@@ -131,12 +177,14 @@ public class VentanaAhorcado extends JFrame {
     
     private void onLetra(ActionEvent e) {
         if (JuegoActual == null) {
+            LblMensaje.setText("Primero inicial el juego");
             return;
         }
         
         JButton src = (JButton) e.getSource();
         char letra = src.getText().charAt(0);
         
+        //Evitar repetidos
         if (JuegoActual.getLetrasUsadas().contains(letra)) {
             LblMensaje.setText("Letra repetida: " + letra);
             src.setEnabled(false);
@@ -145,14 +193,17 @@ public class VentanaAhorcado extends JFrame {
         }
         
         int antes = JuegoActual.getIntentos();
-        JuegoActual.jugar();
+        JuegoActual.jugar(letra);
+        ActualizarStick();
         
-        LblPalabra.setText(JuegoActual.getFiguraAhorcado().toString());
+        LblPalabra.setText(Espaciada(JuegoActual.getPalabraActual()));
+        LblIntentos.setText("Intentos: " + JuegoActual.getIntentos());
+        TxtAscii.setText(JuegoActual.getFiguraAhorcado().toString());
         
         src.setEnabled(false);
         
         if (JuegoActual.getIntentos() < antes) {
-            LblMensaje.setText("Letra incorreca: " + letra);
+            LblMensaje.setText("Letra incorreca: " + letra + " | Intentos restantes: " + JuegoActual.getIntentos());
         } else {
             LblMensaje.setText("Letra correcta: " + letra);
         }
@@ -170,7 +221,7 @@ public class VentanaAhorcado extends JFrame {
         String pa = JuegoActual.getPalabraActual();
         
         for (int i = 0; i < pa.length(); i++) {
-            if (pa.charAt(i) != ' ' && pa.charAt(i) == ' ') {
+            if (pa.charAt(i) != ' ' && pa.charAt(i) == '_') {
                 return false;
             }
         }
@@ -179,8 +230,8 @@ public class VentanaAhorcado extends JFrame {
     }
     
     private void DeshabilitarTodas() {
-        for (JButton boton : BtnLetras) {
-            boton.setEnabled(false);
+        for (int i = 0; i < BtnLetras.size(); i++) {
+            BtnLetras.get(i).setEnabled(false);
         }
     }
     
@@ -192,6 +243,29 @@ public class VentanaAhorcado extends JFrame {
         }
         
         return sb.toString();
+    }
+    
+    private void CargarImagenes() {
+        for (int i = 0; i < 6; i++) {
+            URL url = getClass().getResource("imagenes/parte" + (i + 1) + ".PNG");
+            if (url != null) {
+                Capas.get(i).setIcon(new ImageIcon(url));
+            }
+        }
+    }
+    
+    private void ActualizarStick() {
+        if (JuegoActual == null) {
+            return;
+        }
+        
+        int errores = JuegoActual.getLimiteIntentos() - JuegoActual.getIntentos();
+        
+        for (int i = 0; i < 6; i++) {
+            Capas.get(i).setVisible(i < errores);
+        }
+        
+        PanelImagen.repaint();
     }
     
     public static void main(String[] args) {
