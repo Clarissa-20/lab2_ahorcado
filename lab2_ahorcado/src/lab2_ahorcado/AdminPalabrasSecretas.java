@@ -21,7 +21,7 @@ public class AdminPalabrasSecretas extends JFrame {
     private final int maxPalabras = 6;
 
     public AdminPalabrasSecretas() {
-        super("Administrador de Palabras");
+        setTitle("Administrador de Palabras");
         palabras.clear();
         setSize(500, 500);
         setLayout(null);
