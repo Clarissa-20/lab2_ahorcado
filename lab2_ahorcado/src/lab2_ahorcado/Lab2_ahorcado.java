@@ -4,7 +4,9 @@
  */
 package lab2_ahorcado;
 
-public class Lab2_ahorcado {
+import javax.swing.JFrame;
+
+public class Lab2_ahorcado extends JFrame{
 
     public static void main(String[] args) {
         
