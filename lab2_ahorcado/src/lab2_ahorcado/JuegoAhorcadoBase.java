@@ -25,6 +25,27 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
         this.limiteIntentos=limiteIntentos;
         palabraActual="";
     }
+
+    public String getPalabraSecreta() {
+        return palabraSecreta;
+    }
+
+    public String getPalabraActual() {
+        return palabraActual;
+    }
+
+    public int getIntentos() {
+        return intentos;
+    }
+
+    public ArrayList<Character> getLetrasUsadas() {
+        return letrasUsadas;
+    }
+
+    public ArrayList<String> getFiguraAhorcado() {
+        return figuraAhorcado;
+    }
+    
     
     
     public abstract void actualizarPalabraActual(char letra);
