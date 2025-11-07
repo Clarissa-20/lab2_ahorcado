@@ -33,12 +33,12 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
         intentos = limiteIntentos;
         
         
-        figuraAhorcado.add("imagenes/parte1.png");
-        figuraAhorcado.add("imagenes/parte2.png");
-        figuraAhorcado.add("imagenes/parte3.png");
-        figuraAhorcado.add("imagenes/parte4.png");
-        figuraAhorcado.add("imagenes/parte5.png");
-        figuraAhorcado.add("imagenes/parte6.png");
+//        figuraAhorcado.add("imagenes/parte1.png");
+//        figuraAhorcado.add("imagenes/parte2.png");
+//        figuraAhorcado.add("imagenes/parte3.png");
+//        figuraAhorcado.add("imagenes/parte4.png");
+//        figuraAhorcado.add("imagenes/parte5.png");
+//        figuraAhorcado.add("imagenes/parte6.png");
         
     }
 
