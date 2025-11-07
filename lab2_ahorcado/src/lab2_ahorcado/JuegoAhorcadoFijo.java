@@ -20,36 +20,25 @@ public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
     
     @Override
     public void actualizarPalabraActual(char letra) {//agruegamos letra a palabra formante....este se ejecuta despues de la verificacion de letra
-        String tempWord="";
+        String tempWord=super.palabraActual;//obtencion de version anterior
         String comparison =String.valueOf(letra);
         //Esto para considerar los espacios...los espacios se manejaran como un _
         if(comparison.equals("_")){
             tempWord+="_";
         }else{
-            tempWord+=letra;
+            tempWord+=letra;//agruegado
         }
         super.palabraActual=tempWord;//Actualiza la palabra actual a la creada mediante la iteracion
     }
 
     @Override
-    public boolean verificarLetra(char letra){//metodo de verificacion si es una letra valida o si no existe ya 
-        
-        //verificacion 1: que sea una letra
-        if(Character.isLetter(letra)){
-            //verificacion 2: que no exista ya
-            boolean verificacion=false;
-            for(char let: super.letrasUsadas){
-                if(let==letra){
-                    verificacion=true;
-                }
-            }
-            if(verificacion==false){
-                super.letrasUsadas.add(letra);
+    public boolean verificarLetra(char letra){ //verificar que la letra ingresada sea parte de la palabra secreta //Manejar por medio de apartado distinto para ingresado de letra
+        for(char comparison: super.palabraSecreta.toCharArray()){
+            if(letra==comparison){
                 return true;
             }
         }
         return false;
-        
     }
 
     @Override
@@ -70,4 +59,24 @@ public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
         //futura logica aqui
     }
     
+    
+    
+    private boolean isLetra(char letra){ //metodo de verificacion si es una letra valida o si no existe ya //Metodo auxiliar
+        //verificacion 1: que sea una letra
+        if(Character.isLetter(letra)){
+            //verificacion 2: que no exista ya
+            boolean verificacion=false;
+            for(char let: super.letrasUsadas){
+                if(let==letra){
+                    verificacion=true;
+                }
+            }
+            if(verificacion==false){
+                super.letrasUsadas.add(letra);
+                return true;
+            }
+        }
+        return false;
+        
+    }
 }
