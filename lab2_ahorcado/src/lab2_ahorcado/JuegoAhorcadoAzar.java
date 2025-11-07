@@ -15,7 +15,6 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
     
     public JuegoAhorcadoAzar(){
         super(6);
-        
         //ejecuta comando para elegir palabra del gestor
     }
     
@@ -34,17 +33,25 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
 
     @Override
     public boolean verificarLetra(char letra) throws ExcepcionLetras {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for(char comparison: super.palabraSecreta.toCharArray()){
+            if(letra==comparison){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean hasGanado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(super.palabraActual.equalsIgnoreCase(palabraSecreta)){
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void inicializarPalabraSecreta() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
         //aqui iria
     }
 
@@ -52,5 +59,26 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
     public void jugar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    
+    public boolean isLetra(char letra){ //metodo de verificacion si es una letra valida o si no existe ya //Metodo auxiliar
+        //verificacion 1: que sea una letra
+        if(Character.isLetter(letra)){
+            //verificacion 2: que no exista ya
+            boolean verificacion=false;
+            for(char let: super.letrasUsadas){
+                if(let==letra){
+                    verificacion=true;
+                }
+            }
+            if(verificacion==false){
+                super.letrasUsadas.add(letra);
+                return true;
+            }
+        }
+        return false;
+        
+    }
+    
     
 }
