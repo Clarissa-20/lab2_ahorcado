@@ -10,11 +10,11 @@ package lab2_ahorcado;
  */
 public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
     
-    String palabraHolder;
+    private final String palabraFija;
     
-    public JuegoAhorcadoFijo(String palabraSecreta){//palabraSecreta a ser indicada en la ventana previa
+    public JuegoAhorcadoFijo(String palabraFija){//palabraSecreta a ser indicada en la ventana previa
         super(6);
-        inicializarPalabraSecreta();//Someter a revision
+        this.palabraFija = (palabraFija == null ? "" : palabraFija.trim().toUpperCase());
     }
     
     
@@ -33,8 +33,8 @@ public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
 
     @Override
     public boolean verificarLetra(char letra){ //verificar que la letra ingresada sea parte de la palabra secreta //Manejar por medio de apartado distinto para ingresado de letra
-        for(char comparison: super.palabraSecreta.toCharArray()){
-            if(letra==comparison){
+        for (int i = 0; i < palabraSecreta.length(); i++) {
+            if (palabraSecreta.charAt(i) == letra) {
                 return true;
             }
         }
@@ -43,15 +43,13 @@ public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
 
     @Override
     public boolean hasGanado() {//verificamos si la palabra que ya llevamos es igual a la palabra ingresada secreta
-        if(super.palabraActual.equalsIgnoreCase(palabraSecreta)){
-            return true;
-        }
-        return false;
+        return palabraSecreta.length() < 0 && palabraActual.indexOf('_') == -1;
     }
 
     @Override
     public void inicializarPalabraSecreta() {
-        super.setPalabraSecreta(palabraHolder);
+        setPalabraSecreta(palabraFija);
+        reiniciarEstado();
     }
 
     @Override

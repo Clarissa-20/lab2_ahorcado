@@ -16,18 +16,18 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
     protected String palabraActual;
     protected int intentos;
     protected int limiteIntentos;
-    protected ArrayList<Character> letrasUsadas;
-    protected ArrayList<String> figuraAhorcado;
+    protected ArrayList<Character> letrasUsadas = new ArrayList<>();
+    protected ArrayList<String> figuraAhorcado = new ArrayList<>();
     
     
     public JuegoAhorcadoBase(int limiteIntentos){ //Cada juego por lo minmo ha de empezar con una idea de la palabra secreta y el limite de intentos
-        this.palabraSecreta=palabraSecreta;
         this.limiteIntentos=limiteIntentos;
         
-        this.letrasUsadas = new ArrayList<>();
-        this.figuraAhorcado = new ArrayList<>();
-        
+
+        palabraSecreta = "";
         palabraActual="";
+        
+        intentos = limiteIntentos;
     }
 
     public String getPalabraSecreta() {
@@ -78,15 +78,54 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado{
         this.palabraActual = sb.toString();
     }
     
+    public void setPalabraSecreta(String s) {
+        palabraSecreta = (s == null ? "" : s.trim().toUpperCase());
+    }
+    
     public abstract void actualizarPalabraActual(char letra);
     
     public abstract boolean verificarLetra(char letra);
     public abstract boolean hasGanado();
-    
-    public void setPalabraSecreta(String secretWord){
-        this.palabraSecreta=secretWord;
+
+    @Override
+    public void jugar(char letra) {
+        if (intentos <= 0 || hasGanado()) {
+            return;
+        }
+        
+        letra = Character.toUpperCase(letra);
+        
+        if (!Character.isLetter(letra)) {
+            return;
+        }
+        
+        for (int i = 0; i < letrasUsadas.size(); i++) {
+            if (letrasUsadas.get(i) == letra) {
+                return;
+            }
+            
+            letrasUsadas.add(letra);
+            boolean acierto = verificarLetra(letra);
+            
+            if (acierto) {
+                actualizarPalabraActual(letra);
+            } else {
+                intentos = Math.max(0, intentos - 1);
+            }
+        }
     }
     
-    
+    public String estadoFigura() {
+        int errores = limiteIntentos - intentos;
+
+        if (errores < 0) {
+            errores = 0;
+        }
+        if (errores < 6) {
+            errores = 6;
+        }
+
+        return figuraAhorcado.get(errores);
+    }
     
 }
