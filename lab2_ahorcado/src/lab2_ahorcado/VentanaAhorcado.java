@@ -34,6 +34,7 @@ public class VentanaAhorcado extends JFrame {
     
     private JPanel PanelLetras;
     private ArrayList<JButton> BtnLetras;
+    private JLabel LblImagenAhorcado;
     
     
     public VentanaAhorcado() {
@@ -68,6 +69,9 @@ public class VentanaAhorcado extends JFrame {
         LblIntentos = new JLabel("Intentos: 6", SwingConstants.CENTER);
         LblIntentos.setFont(new Font("SansSerif", Font.PLAIN, 16));
         
+        LblImagenAhorcado = new JLabel("", SwingConstants.CENTER);
+        
+        
         JPanel centro = new JPanel(new BorderLayout(10, 10));
         
         JPanel PanelArriba = new JPanel();
@@ -95,6 +99,8 @@ public class VentanaAhorcado extends JFrame {
         
         CargarImagenes();
         
+        centro.add(PanelImagen);
+        
         TxtAscii = new JTextArea(8, 20);
         TxtAscii.setEnabled(false);
         TxtAscii.setFont(new Font("Monospaced", Font.PLAIN, 12));
@@ -105,6 +111,7 @@ public class VentanaAhorcado extends JFrame {
         JPanel PanelMid = new JPanel();
         PanelMid.setLayout(new GridLayout(1, 2, 10, 10));
         PanelMid.add(ScrollAscii);
+        PanelMid.add(centro);
         
         PanelCentro.add(PanelArriba, BorderLayout.NORTH);
         PanelCentro.add(PanelMid, BorderLayout.CENTER);
