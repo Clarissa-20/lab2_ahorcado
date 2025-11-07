@@ -4,20 +4,12 @@
  */
 package lab2_ahorcado;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author David
  */
-public class ExcepcionLetras extends Exception {
-    
-    
-    public ExcepcionLetras(String mensaje){
-        super(mensaje);
-        JOptionPane.showMessageDialog(null, mensaje);
+public class Ejecutable {
+    public static void main(String[] args) {
+        menuInicial ventana = new menuInicial();
     }
-    
-    
-            
 }

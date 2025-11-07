@@ -63,7 +63,7 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
     }
     
     
-    public boolean isLetra(char letra){ //metodo de verificacion si es una letra valida o si no existe ya //Metodo auxiliar
+    public boolean isLetra(char letra) throws ExcepcionLetras{ //metodo de verificacion si es una letra valida o si no existe ya //Metodo auxiliar
         //verificacion 1: que sea una letra
         if(Character.isLetter(letra)){
             //verificacion 2: que no exista ya
@@ -78,8 +78,7 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
                 return true;
             }
         }
-        return false;
-        
+        throw new ExcepcionLetras("El dato ingresado no es una letra");
     }
     
     
