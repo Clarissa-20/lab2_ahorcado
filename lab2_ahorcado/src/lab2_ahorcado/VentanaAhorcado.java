@@ -29,7 +29,6 @@ public class VentanaAhorcado extends JFrame {
     private JLabel LblBase;
     private ArrayList<JLabel> Capas;
     
-    private JTextArea TxtAscii;
     private JLabel LblMensaje;
     
     private JPanel PanelLetras;
@@ -39,7 +38,6 @@ public class VentanaAhorcado extends JFrame {
     
     public VentanaAhorcado() {
         super("Juego Ahorcado");
-        pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
@@ -53,9 +51,7 @@ public class VentanaAhorcado extends JFrame {
         
         BtnIniciarFijo = new JButton("Iniciar (Fijo)");
         
-        
-        ConfigurarEventos();
-        
+                
         PanelTop.add(TxtPalabraFija);
         PanelTop.add(BtnIniciarFijo);
         
@@ -69,10 +65,6 @@ public class VentanaAhorcado extends JFrame {
         LblIntentos = new JLabel("Intentos: 6", SwingConstants.CENTER);
         LblIntentos.setFont(new Font("SansSerif", Font.PLAIN, 16));
         
-        LblImagenAhorcado = new JLabel("", SwingConstants.CENTER);
-        
-        
-        JPanel centro = new JPanel(new BorderLayout(10, 10));
         
         JPanel PanelArriba = new JPanel();
         PanelArriba.setLayout(new GridLayout(2, 1));
@@ -99,22 +91,12 @@ public class VentanaAhorcado extends JFrame {
         
         CargarImagenes();
         
+        JPanel centro = new JPanel();
+        centro.setLayout(new GridLayout(1, 2, 10, 10));
         centro.add(PanelImagen);
         
-        TxtAscii = new JTextArea(8, 20);
-        TxtAscii.setEnabled(false);
-        TxtAscii.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        
-        
-        JScrollPane ScrollAscii = new JScrollPane(TxtAscii);
-        
-        JPanel PanelMid = new JPanel();
-        PanelMid.setLayout(new GridLayout(1, 2, 10, 10));
-        PanelMid.add(ScrollAscii);
-        PanelMid.add(centro);
-        
         PanelCentro.add(PanelArriba, BorderLayout.NORTH);
-        PanelCentro.add(PanelMid, BorderLayout.CENTER);
+        PanelCentro.add(centro, BorderLayout.CENTER);
         
         PanelLetras = new JPanel();
         PanelLetras.setLayout(new GridLayout(2, 13, 4, 4));
@@ -140,8 +122,11 @@ public class VentanaAhorcado extends JFrame {
         PanelAbajo.add(LblMensaje, BorderLayout.SOUTH);
         
         add(PanelTop, BorderLayout.NORTH);
-        add(PanelMid, BorderLayout.CENTER);
+        add(PanelCentro, BorderLayout.CENTER);
         add(PanelAbajo, BorderLayout.SOUTH);
+        
+        ConfigurarEventos();
+        pack();
     }
     
     private void ConfigurarEventos() {
@@ -158,7 +143,6 @@ public class VentanaAhorcado extends JFrame {
             
             LblPalabra.setText(Espaciada(JuegoActual.getPalabraActual()));
             LblIntentos.setText("Intentos: " + JuegoActual.getIntentos());
-            TxtAscii.setText(JuegoActual.figuraAhorcado.toString());
             LblMensaje.setText("Ingresa un numero");
             
             ActualizarPantallaInicio();
@@ -172,9 +156,7 @@ public class VentanaAhorcado extends JFrame {
     private void ActualizarPantallaInicio() {
         LblPalabra.setText(Espaciada(JuegoActual.getPalabraActual()));
         LblIntentos.setText("Intentos: " + JuegoActual.getIntentos());
-        
-        TxtAscii.setText(JuegoActual.getFiguraAhorcado().toString());
-        
+                
         LblMensaje.setText("Ingrese una letra");
         
         for (JButton boton : BtnLetras) {
@@ -205,7 +187,6 @@ public class VentanaAhorcado extends JFrame {
         
         LblPalabra.setText(Espaciada(JuegoActual.getPalabraActual()));
         LblIntentos.setText("Intentos: " + JuegoActual.getIntentos());
-        TxtAscii.setText(JuegoActual.getFiguraAhorcado().toString());
         
         src.setEnabled(false);
         
