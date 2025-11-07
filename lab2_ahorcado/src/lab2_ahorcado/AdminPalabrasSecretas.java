@@ -52,7 +52,7 @@ public class AdminPalabrasSecretas extends JFrame {
         agregar.addActionListener(e -> {
             String palabra = ingreso.getText().trim();
             if (!palabra.isEmpty()) {
-                if (!palabra.contains(palabra)) {
+                if (!palabras.contains(palabra)) {
                     palabras.add(palabra);
                     contador++;
                     info.setText("PALABRAS AGREDADAS: " + contador + "/" + maxPalabras);

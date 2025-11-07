@@ -15,6 +15,7 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
     
     public JuegoAhorcadoAzar(){
         super(6);
+        inicializarPalabraSecreta();
         //ejecuta comando para elegir palabra del gestor
     }
     
@@ -32,7 +33,7 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
     }
 
     @Override
-    public boolean verificarLetra(char letra) throws ExcepcionLetras {
+    public boolean verificarLetra(char letra){
         for(char comparison: super.palabraSecreta.toCharArray()){
             if(letra==comparison){
                 return true;
@@ -51,7 +52,8 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
 
     @Override
     public void inicializarPalabraSecreta() {
-        
+        String palabraAzar = AdminPalabrasSecretas.getPalbras();
+        super.setPalabraSecreta(palabraAzar);
         //aqui iria
     }
 
