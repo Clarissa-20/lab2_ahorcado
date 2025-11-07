@@ -86,7 +86,8 @@ public class AdminPalabrasSecretas extends JFrame {
             }
             primeraVez = true;
             JOptionPane.showMessageDialog(this, "Palabras guardadas con exito.");
-            new Lab2_ahorcado().setVisible(true); 
+//            new Lab2_ahorcado().setVisible(true); 
+            menuSeleccion ventana = new menuSeleccion();//se realizo el cambio ya que debe que llevar a la ventana de seleccion
             dispose();
         });
         setVisible(true);
@@ -109,6 +110,6 @@ public class AdminPalabrasSecretas extends JFrame {
     }
 
     public static void main(String[] args) {
-        new AdminPalabrasSecretas();
+        AdminPalabrasSecretas view = new AdminPalabrasSecretas();
     }
 }
