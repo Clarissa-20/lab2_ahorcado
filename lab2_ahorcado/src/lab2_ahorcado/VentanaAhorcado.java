@@ -34,6 +34,7 @@ public class VentanaAhorcado extends JFrame {
     
     private JPanel PanelLetras;
     private ArrayList<JButton> BtnLetras;
+    private JLabel LblImagenAhorcado;
     
     
     public VentanaAhorcado() {
@@ -67,6 +68,9 @@ public class VentanaAhorcado extends JFrame {
         
         LblIntentos = new JLabel("Intentos: 6", SwingConstants.CENTER);
         LblIntentos.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        
+        LblImagenAhorcado = new JLabel("", SwingConstants.CENTER);
+        
         
         JPanel centro = new JPanel(new BorderLayout(10, 10));
         
