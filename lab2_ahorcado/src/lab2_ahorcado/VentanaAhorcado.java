@@ -31,17 +31,18 @@ public class VentanaAhorcado extends JFrame {
     
     public VentanaAhorcado() {
         super("Juego Ahorcado");
-        ConfigurarEventos();
         pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
-        setMinimumSize(new Dimension(800, 600));
+        setMinimumSize(new Dimension(800, 500));
         
         JPanel PanelTop = new JPanel();
         PanelTop.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         
         BtnIniciar = new JButton("Iniciar");
+        
+        ConfigurarEventos();
         
         PanelTop.add(BtnIniciar);
         
@@ -96,7 +97,7 @@ public class VentanaAhorcado extends JFrame {
         PanelAbajo.setLayout(new BorderLayout(8, 8));
         
         PanelAbajo.add(PanelLetras, BorderLayout.CENTER);
-        PanelAbajo.add(LblMensaje, SwingConstants.SOUTH);
+        PanelAbajo.add(LblMensaje, BorderLayout.SOUTH);
         
         add(PanelTop, BorderLayout.NORTH);
         add(PanelMid, BorderLayout.CENTER);
@@ -191,5 +192,11 @@ public class VentanaAhorcado extends JFrame {
         }
         
         return sb.toString();
+    }
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new VentanaAhorcado().setVisible(true);
+        });
     }
 }
